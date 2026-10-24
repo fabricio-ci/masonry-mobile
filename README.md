@@ -62,3 +62,18 @@ tokens, senhas, conteúdo de voto ou dados pessoais.
 ## Estrutura
 
 Feature-first: `lib/core/` (config, rede, tema, roteamento) e `lib/features/<feature>/{data,domain,presentation}`.
+
+### Tema, navegação e componentes
+
+- **Material desacoplado:** no Flutter 3.47 o Material saiu do framework. Importe sempre
+  `package:material_ui/material_ui.dart`, nunca `package:flutter/material.dart` (misturar os dois
+  quebra `Theme` e as páginas do go_router).
+- **Tokens:** `lib/core/theme/tokens.dart` é o único lugar com cores, espaçamentos, raios e tamanhos
+  crus. A paleta vem do app legado; onde a cor original não passava em contraste AA ela foi
+  escurecida (o teste `test/core/theme/app_theme_test.dart` garante 4,5:1). Cores semânticas extras
+  (aviso, sucesso, cabeçalho do obreiro) ficam em `AppColors` (`context.appColors`).
+- **Rotas:** `lib/core/routing/`. O guard (`sessionRedirect`) observa o `authStateProvider`: sessão em
+  verificação vai para `/splash`, sem sessão vai para `/login?from=<destino>` e, após o login, volta
+  ao destino. Telas autenticadas ficam dentro do `ShellRoute` (barra superior + menu lateral).
+- **Estados de tela:** `lib/core/widgets/state_views.dart` traz `AppLoading`, `AppEmptyState`,
+  `AppErrorState` e `AsyncValueView` (nunca mostra a exceção crua ao usuário).

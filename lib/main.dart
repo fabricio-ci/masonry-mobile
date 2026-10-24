@@ -1,31 +1,15 @@
-import 'package:flutter/material.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:masonryv2/app.dart';
 import 'package:masonryv2/core/config/app_config.dart';
+import 'package:masonryv2/core/config/app_config_provider.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   final config = AppConfig.fromEnvironment();
-  runApp(MasonryApp(config: config));
-}
-
-/// Raiz provisória: tema, rotas e shell chegam na tarefa #443.
-class MasonryApp extends StatelessWidget {
-  const MasonryApp({required this.config, super.key});
-
-  final AppConfig config;
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Masonry',
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Center(
-          child: Text(
-            config.isDev ? 'Masonry (dev)' : 'Masonry',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-        ),
-      ),
-    );
-  }
+  runApp(
+    ProviderScope(
+      overrides: [appConfigProvider.overrideWithValue(config)],
+      child: const MasonryApp(),
+    ),
+  );
 }
