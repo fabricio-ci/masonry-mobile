@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:masonryv2/app.dart';
 import 'package:masonryv2/core/config/app_config.dart';
 import 'package:masonryv2/core/config/app_config_provider.dart';
+import 'package:masonryv2/core/config/app_version_provider.dart';
 import 'package:masonryv2/features/auth/data/auth_providers.dart';
 import 'package:masonryv2/features/auth/domain/auth_state.dart';
 import 'package:masonryv2/features/auth/domain/auth_user.dart';
@@ -45,6 +46,7 @@ void main() {
             ),
           ),
           authStateProvider.overrideWith(() => auth),
+          appVersionProvider.overrideWith((ref) async => '1.0.0'),
         ],
         child: const MasonryApp(),
       ),
@@ -61,6 +63,7 @@ void main() {
             const AppConfig(flavor: Flavor.dev, apiBaseUrl: 'http://x'),
           ),
           authStateProvider.overrideWith(() => auth),
+          appVersionProvider.overrideWith((ref) async => '1.0.0'),
         ],
         child: const MasonryApp(),
       ),
